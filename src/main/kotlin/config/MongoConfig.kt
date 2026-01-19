@@ -1,9 +1,7 @@
 package io.github.krisalord.config
 
 import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
-import io.ktor.server.application.ApplicationEnvironment
 import org.litote.kmongo.KMongo
 
 object MongoConfig {
@@ -13,9 +11,7 @@ object MongoConfig {
     lateinit var database: MongoDatabase
         private set
 
-    fun init(environment: ApplicationEnvironment) {
-        val uri = environment.config.property("ktor.mongo.uri").getString()
-
+    fun init(uri: String) {
         client = KMongo.createClient(uri)
         database = client.getDatabase("secure-ai-notes-api")
     }
