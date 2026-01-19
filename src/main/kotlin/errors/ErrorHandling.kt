@@ -1,4 +1,4 @@
-package io.github.krisalord.config
+package io.github.krisalord.errors
 
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.application.*

@@ -1,7 +1,7 @@
 package io.github.krisalord.validation
 
 
-import io.github.krisalord.config.ValidationException
+import io.github.krisalord.errors.ValidationException
 
 object AuthValidation {
     fun validateEmail(email: String) {

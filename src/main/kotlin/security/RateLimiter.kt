@@ -1,6 +1,6 @@
 package io.github.krisalord.security
 
-import io.github.krisalord.config.RateLimitExceededException
+import io.github.krisalord.errors.RateLimitExceededException
 import java.time.Instant
 import java.util.concurrent.ConcurrentHashMap
 

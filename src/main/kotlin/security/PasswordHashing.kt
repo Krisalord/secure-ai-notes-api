@@ -1,8 +1,8 @@
-package io.github.krisalord.services
+package io.github.krisalord.security
 
 import org.mindrot.jbcrypt.BCrypt
 
-class PasswordService {
+class PasswordHashing {
     fun hash(rawPassword: String): String {
         return BCrypt.hashpw(rawPassword, BCrypt.gensalt())
     }

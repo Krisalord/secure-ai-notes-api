@@ -1,16 +1,17 @@
 package io.github.krisalord.services
 
-import io.github.krisalord.config.InvalidPasswordException
+import io.github.krisalord.errors.InvalidPasswordException
 import io.github.krisalord.config.JwtConfig
-import io.github.krisalord.config.UserAlreadyExistsException
-import io.github.krisalord.config.UserNotFoundException
+import io.github.krisalord.errors.UserAlreadyExistsException
+import io.github.krisalord.errors.UserNotFoundException
 import io.github.krisalord.models.User
 import io.github.krisalord.repositories.UserRepository
+import io.github.krisalord.security.PasswordHashing
 import io.github.krisalord.validation.AuthValidation
 
 class AuthService(
     private val userRepository: UserRepository,
-    private val passwordService: PasswordService
+    private val passwordHashing: PasswordHashing
 ) {
     fun register(email: String, rawPassword: String): User {
         AuthValidation.validateEmail(email)
@@ -23,7 +24,7 @@ class AuthService(
         return userRepository.createUser(
             User(
                 email = email,
-                passwordHash = passwordService.hash(rawPassword)
+                passwordHash = passwordHashing.hash(rawPassword)
             )
         )
     }
@@ -34,7 +35,7 @@ class AuthService(
         val user = userRepository.findByEmail(email)
             ?: throw UserNotFoundException("User not found")
 
-        if (!passwordService.verify(rawPassword, user.passwordHash)) {
+        if (!passwordHashing.verify(rawPassword, user.passwordHash)) {
             throw InvalidPasswordException("Invalid credentials")
         }
 

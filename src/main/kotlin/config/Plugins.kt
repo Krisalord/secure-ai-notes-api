@@ -1,5 +1,6 @@
 package io.github.krisalord.config
 
+import io.github.krisalord.errors.installErrorHandling
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*

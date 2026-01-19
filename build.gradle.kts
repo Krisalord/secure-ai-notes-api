@@ -22,6 +22,10 @@ application {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://packages.confluent.io/maven")
+        name = "confluence"
+    }
 }
 
 dependencies {
@@ -56,6 +60,10 @@ dependencies {
 
     // Status Pages (error handling)
     implementation("io.ktor:ktor-server-status-pages:$ktorVersion")
+    implementation("io.github.flaxoos:ktor-client-circuit-breaker:2.2.1")
+    implementation("io.ktor:ktor-server-core:3.3.2")
+    implementation("io.ktor:ktor-server-swagger:3.3.2")
+    implementation("io.ktor:ktor-server-core:3.3.2")
 
     // Testing
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")

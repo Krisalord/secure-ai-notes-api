@@ -1,6 +1,6 @@
 package io.github.krisalord.services
 
-import io.github.krisalord.config.AiRequestFailedException
+import io.github.krisalord.errors.AiRequestFailedException
 import io.github.krisalord.models.dto.openai.OpenAiMessage
 import io.github.krisalord.models.dto.openai.OpenAiRequest
 import io.github.krisalord.models.dto.openai.OpenAiResponse
@@ -12,7 +12,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
-class OpenAiService(private val apiKey: String) {
+class OpenAiClient(private val apiKey: String) {
     private val client = HttpClient {
         install(ContentNegotiation) {
             json(Json {

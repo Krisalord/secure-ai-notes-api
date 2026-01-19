@@ -4,6 +4,7 @@ import io.github.krisalord.models.Note
 import io.github.krisalord.models.User
 import io.github.krisalord.repositories.NoteRepository
 import io.github.krisalord.repositories.UserRepository
+import io.github.krisalord.security.PasswordHashing
 import io.github.krisalord.security.RateLimiter
 import io.github.krisalord.services.*
 import io.ktor.server.application.Application
@@ -11,7 +12,7 @@ import io.ktor.server.application.Application
 class Dependencies(
     val authService: AuthService,
     val noteService: NoteService,
-    val aiService: AiService
+    val aiSummaryService: AiSummaryService
 )
 
 fun Application.buildDependencies(): Dependencies {
@@ -20,16 +21,16 @@ fun Application.buildDependencies(): Dependencies {
     val userRepo = UserRepository(db.getCollection("users", User::class.java))
     val noteRepo = NoteRepository(db.getCollection("notes", Note::class.java))
 
-    val passwordService = PasswordService()
-    val authService = AuthService(userRepo, passwordService)
+    val passwordHashing = PasswordHashing()
+    val authService = AuthService(userRepo, passwordHashing)
     val noteService = NoteService(noteRepo)
 
-    val openAiService = OpenAiService(
+    val openAiClient = OpenAiClient(
         environment.config.property("ktor.openai.apiKey").getString()
     )
 
     val rateLimiter = RateLimiter(maxRequests = 5, windowSeconds = 60)
-    val aiService = AiService(noteRepo, openAiService, rateLimiter)
+    val aiSummaryService = AiSummaryService(noteRepo, openAiClient, rateLimiter)
 
-    return Dependencies(authService, noteService, aiService)
+    return Dependencies(authService, noteService, aiSummaryService)
 }

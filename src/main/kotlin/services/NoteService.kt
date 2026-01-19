@@ -1,7 +1,7 @@
 package io.github.krisalord.services
 
-import io.github.krisalord.config.NoteNotFoundException
-import io.github.krisalord.config.UnauthorizedNoteAccessException
+import io.github.krisalord.errors.NoteNotFoundException
+import io.github.krisalord.errors.UnauthorizedNoteAccessException
 import io.github.krisalord.models.Note
 import io.github.krisalord.repositories.NoteRepository
 import io.github.krisalord.security.Sanitizer

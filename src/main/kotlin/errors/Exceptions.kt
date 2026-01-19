@@ -1,4 +1,4 @@
-package io.github.krisalord.config
+package io.github.krisalord.errors
 
 // Base exception for the whole app
 sealed class AppException(message: String) : RuntimeException(message)
