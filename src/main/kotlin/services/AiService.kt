@@ -6,7 +6,7 @@ import io.github.krisalord.security.RateLimiter
 import org.bson.types.ObjectId
 
 class AiService(
-    private val noteRepository: NoteRepository,
+    private val mongoNoteRepository: NoteRepository,
     private val openAiService: OpenAiService,
     private val rateLimiter: RateLimiter
 ) {
@@ -14,14 +14,14 @@ class AiService(
     suspend fun summarizeNotes(userId: ObjectId): String {
         rateLimiter.check(userId.toHexString())
 
-        val notes = noteRepository.findByUser(userId)
+        val notes = mongoNoteRepository.findByUser(userId)
         if (notes.isEmpty()) {
             throw NoNotesException("No notes to summarize")
         }
 
         val combinedNotes = notes
             .joinToString("\n")
-            .take(6000) // hard safety limit
+            .take(6000) // Char limit for request
 
         return openAiService.makeOpenAIAPIRequest(
             """

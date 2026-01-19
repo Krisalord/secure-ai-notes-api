@@ -37,10 +37,8 @@ class OpenAiService(private val apiKey: String) {
             }.body()
 
             return response.choices.first().message.content
-
         } catch (e: Exception) {
             throw AiRequestFailedException("AI request failed")
         }
     }
-
 }

@@ -18,7 +18,5 @@ object MongoConfig {
 
         client = KMongo.createClient(uri)
         database = client.getDatabase("secure-ai-notes-api")
-
-        println("Mongo Config Initialized")
     }
 }

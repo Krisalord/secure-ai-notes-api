@@ -1,9 +1,6 @@
 package io.github.krisalord.routes
 
-import io.github.krisalord.repositories.NoteRepository
 import io.github.krisalord.services.AiService
-import io.github.krisalord.services.OpenAiService
-import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.principal

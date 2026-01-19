@@ -1,6 +1,5 @@
-package io.github.krisalord.config.app
+package io.github.krisalord.config
 
-import io.github.krisalord.config.MongoConfig
 import io.github.krisalord.models.Note
 import io.github.krisalord.models.User
 import io.github.krisalord.repositories.NoteRepository
@@ -16,13 +15,13 @@ fun Application.buildDependencies(): Dependencies {
     val userRepository =
         UserRepository(database.getCollection("users", User::class.java))
 
-    val noteRepository =
+    val mongoNoteRepository =
         NoteRepository(database.getCollection("notes", Note::class.java))
 
     val passwordService = PasswordService()
     val authService = AuthService(userRepository, passwordService)
 
-    val noteService = NoteService(noteRepository)
+    val noteService = NoteService(mongoNoteRepository)
 
     val openAiService =
         OpenAiService(environment.config.property("ktor.openai.apiKey").getString())
@@ -33,7 +32,7 @@ fun Application.buildDependencies(): Dependencies {
     )
 
     val aiService = AiService(
-        noteRepository = noteRepository,
+        mongoNoteRepository = mongoNoteRepository,
         openAiService = openAiService,
         rateLimiter = rateLimiter
     )

@@ -9,10 +9,12 @@ import io.ktor.http.*
 fun Application.installErrorHandling() {
     install(StatusPages) {
 
+        // --- Validation errors ---
         exception<ValidationException> { call, e ->
             call.respond(HttpStatusCode.BadRequest, mapOf("error" to e.message))
         }
 
+        // --- User / Auth errors ---
         exception<UserAlreadyExistsException> { call, e ->
             call.respond(HttpStatusCode.Conflict, mapOf("error" to e.message))
         }
@@ -25,14 +27,20 @@ fun Application.installErrorHandling() {
             call.respond(HttpStatusCode.Unauthorized, mapOf("error" to e.message))
         }
 
-        exception<Throwable> { call, _ ->
-            call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Internal server error"))
+        exception<AuthenticationException> { call, e ->
+            call.respond(HttpStatusCode.Unauthorized, mapOf("error" to e.message))
         }
 
+        exception<AuthorizationException> { call, e ->
+            call.respond(HttpStatusCode.Forbidden, mapOf("error" to e.message))
+        }
+
+        // --- Notes errors ---
         exception<NoNotesException> { call, e ->
             call.respond(HttpStatusCode.BadRequest, mapOf("error" to e.message))
         }
 
+        // --- AI / Rate limit errors ---
         exception<RateLimitExceededException> { call, e ->
             call.respond(HttpStatusCode.TooManyRequests, mapOf("error" to e.message))
         }
@@ -41,5 +49,9 @@ fun Application.installErrorHandling() {
             call.respond(HttpStatusCode.BadGateway, mapOf("error" to "AI service unavailable"))
         }
 
+        // --- Fallback for unexpected errors ---
+        exception<Throwable> { call, _ ->
+            call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Internal server error"))
+        }
     }
 }

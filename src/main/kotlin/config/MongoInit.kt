@@ -1,6 +1,5 @@
-package io.github.krisalord.config.app
+package io.github.krisalord.config
 
-import io.github.krisalord.config.MongoConfig
 import io.ktor.server.application.*
 
 fun Application.initInfrastructure() {

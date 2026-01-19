@@ -1,4 +1,4 @@
-package io.github.krisalord.config.app
+package io.github.krisalord.config
 
 import io.github.krisalord.routes.*
 import io.ktor.server.application.*
