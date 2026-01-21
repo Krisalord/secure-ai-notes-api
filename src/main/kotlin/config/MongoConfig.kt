@@ -13,7 +13,7 @@ object MongoConfig {
         private set
 
     fun init(environment: ApplicationEnvironment) {
-        val uri = System.getenv("KTOR_MONGO_URI")
+        val uri = environment.config.property("ktor.mongo.uri").getString()
         client = KMongo.createClient(uri)
         database = client.getDatabase("secure-ai-notes-api")
     }

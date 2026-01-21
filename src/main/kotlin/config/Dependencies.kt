@@ -26,7 +26,7 @@ fun Application.buildDependencies(): Dependencies {
     val noteService = NoteService(noteRepo)
 
     val openAiClient = OpenAiClient(
-        System.getenv("OPENAI_API_KEY")
+        environment.config.property("ktor.openai.apiKey").getString()
     )
 
     val rateLimiter = RateLimiter(maxRequests = 5, windowSeconds = 60)
