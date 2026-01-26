@@ -4,12 +4,12 @@ A secure, AI-powered notes API built with Kotlin, Ktor & MongoDB — featuring J
 
 ## 1 Features
 
-✅ User registration and login  
-✅ CRUD Notes management  
-✅ AI-powered notes summarization  
-✅ Rate limiting on AI endpoints  
-✅ Centralized error handling  
-✅ Modular, maintainable architecture
+- User registration and login  
+- CRUD Notes management  
+- AI-powered notes summarization  
+- Rate limiting on AI endpoints  
+- Centralized error handling  
+- Modular, maintainable architecture
 
 ## 2 Tech Stack
 
@@ -23,7 +23,7 @@ A secure, AI-powered notes API built with Kotlin, Ktor & MongoDB — featuring J
 
 1. Clone & Configure
 ```bash
-  git clone https://github.com/yourusername/secure-ai-notes-api.git
+  git clone https://github.com/krisalord/secure-ai-notes-api.git
   cd secure-ai-notes-api
 ```
 2. Set your config in application.yaml
